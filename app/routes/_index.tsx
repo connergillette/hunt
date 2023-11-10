@@ -1,6 +1,7 @@
 import { ActionFunction, LoaderArgs, LoaderFunction, json, redirect } from '@remix-run/node'
 import { createServerClient } from '@supabase/auth-helpers-remix'
 import { useActionData, useLoaderData } from 'react-router'
+import Status from '~/components/Status'
 
 export const action: ActionFunction = async ({ request }) => {
   const response = new Response()
@@ -49,12 +50,41 @@ export default function Index() {
 
   return (
     <div>
-      <h1 className="text-2xl w-full text-center pt-10">Hello, {session.user.email}!</h1>
-      <div className="flex flex-col p-10">
+      <div className="flex flex-col p-10 gap-2">
         {
           jobApps.map((app) => (
-            <div className="w-full h-24">
-              {app.company_name} - {app.title}
+            <div className="flex w-full p-4 bg-gray-100 rounded-md gap-10 whitespace-nowrap" key={app.id}>
+              <div className="w-48 font-bold flex">
+                {app.company_name}
+              </div>
+              <div className="flex w-1/3">
+                {app.title}
+              </div>
+              <div className="flex w-24">
+                {app.location}
+              </div>
+              <div className="w-64 flex gap-2 justify-end grow">
+                <div>
+                  {app.with_referral ? <Status status="good">{app.referrer}</Status> : <Status status="neutral">No referral</Status>}
+                </div>
+                <div>
+                  {app.submitted ? <Status status="good">Submitted</Status> : <Status status="neutral">Not submitted</Status>}
+                </div>
+                <div>
+                  {app.interviewed == null && <Status status="neutral">Pending response</Status>}
+                  {
+                    app.interviewed != null && (
+                      app.interviewed ? <Status status="good">Interviewed</Status> : <Status status="bad">No interview</Status>
+                    )
+                  }
+                </div>
+                <div>
+                  {app.interviewed != null && app.received_offer == null && <Status status="neutral">Pending offer</Status>}
+                  {app.interviewed != null && (
+                    app.received_offer ? <Status status="good">Received offer</Status> : <Status status="bad">No offer</Status>
+                  )}
+                </div>
+              </div>
             </div>
           ))
         }
