@@ -1,6 +1,10 @@
 import { ActionFunction, LoaderArgs, LoaderFunction, json, redirect } from '@remix-run/node'
+import { Form } from '@remix-run/react'
 import { createServerClient } from '@supabase/auth-helpers-remix'
+import { useEffect, useRef, useState } from 'react'
 import { useActionData, useLoaderData } from 'react-router'
+import Button from '~/components/Button'
+import Input from '~/components/Input'
 import Status from '~/components/Status'
 
 export const action: ActionFunction = async ({ request }) => {
@@ -47,10 +51,26 @@ export const loader: LoaderFunction = async ({ request }: LoaderArgs) => {
 export default function Index() {
   const { jobApps, session } = useLoaderData()
   const actionData = useActionData()
+  const formRef = useRef(null)
+
+  useEffect(() => {
+    formRef.current?.reset()
+  }, [jobApps])
 
   return (
     <div>
       <div className="flex flex-col p-10 gap-2">
+        <Form action="/create" method="post" ref={formRef}>
+          <div className="flex gap-2 flex-wrap">
+            <Input name="company_name" placeholder={'Company Name'}></Input>
+            <Input name="title" placeholder={'Job Title'}></Input>
+            <Input name="location" placeholder={'Location'}></Input>
+            <Input name="referrer" placeholder={'Referrer'}></Input>
+            <Input name="submitted" placeholder={'Submitted?'} type="checkbox" value={true}></Input>
+            <Input name="link" placeholder={'Link'}></Input>
+            <Button type="submit">Submit</Button>
+          </div>
+        </Form>
         {
           jobApps.map((app) => (
             <div className="flex w-full p-4 bg-gray-100 rounded-md gap-10 whitespace-nowrap" key={app.id}>
