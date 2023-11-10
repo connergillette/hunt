@@ -30,18 +30,35 @@ export const loader: LoaderFunction = async ({ request }: LoaderArgs) => {
   )
   const { data: { session }} = await supabase.auth.getSession()
 
-  /// ...resolve loader
+  if (session) {
+    const appResponse = await supabase.from('job_applications').select().order('updated_at', { ascending: false }).eq('user_id', session.user.id)
+    let jobApps = []
 
-  return json({ session })
+    if (!appResponse.error) {
+      jobApps = appResponse.data
+    }
+
+    return json({ jobApps, session })
+  }
+  return json({})
 }
 
 export default function Index() {
-  const { session } = useLoaderData()
+  const { jobApps, session } = useLoaderData()
   const actionData = useActionData()
 
   return (
     <div>
-      <h1 className="text-2xl w-full text-center pt-10">Welcome to Project Name!</h1>
+      <h1 className="text-2xl w-full text-center pt-10">Hello, {session.user.email}!</h1>
+      <div className="flex flex-col p-10">
+        {
+          jobApps.map((app) => (
+            <div className="w-full h-24">
+              {app.company_name} - {app.title}
+            </div>
+          ))
+        }
+      </div>
     </div>
   );
 }
