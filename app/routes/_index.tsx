@@ -80,7 +80,7 @@ export default function Index() {
                 </div>
                 <div>
                   {app.interviewed != null && app.received_offer == null && <Status status="neutral">Pending offer</Status>}
-                  {app.interviewed != null && (
+                  {app.interviewed != null && app.interviewed && (
                     app.received_offer ? <Status status="good">Received offer</Status> : <Status status="bad">No offer</Status>
                   )}
                 </div>
