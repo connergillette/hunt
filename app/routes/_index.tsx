@@ -59,7 +59,7 @@ export default function Index() {
 
   return (
     <div>
-      <div className="flex flex-col p-10 gap-2">
+      <div className="flex flex-col p-10 gap-2 text-white/50">
         <Form action="/create" method="post" ref={formRef}>
           <div className="flex gap-2 flex-wrap">
             <Input name="company_name" placeholder={'Company Name'}></Input>
@@ -73,7 +73,7 @@ export default function Index() {
         </Form>
         {
           jobApps.map((app) => (
-            <div className="flex w-full p-4 bg-gray-100 rounded-md gap-10 whitespace-nowrap" key={app.id}>
+            <div className="flex w-full p-4 bg-gray-700 rounded-md gap-10 whitespace-nowrap text-gray-200" key={app.id}>
               <div className="w-48 font-bold flex">
                 {app.company_name}
               </div>
