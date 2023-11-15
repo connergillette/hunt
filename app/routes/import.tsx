@@ -43,9 +43,22 @@ export const action: ActionFunction = async ({ request }) => {
   
     const spreadsheet = formData.get("spreadsheet");
 
-    // TODO: Parse raw CSV data
-    fs.readFile(spreadsheet.filepath, 'utf8', (err, data) => {
-      console.log(data)
+    fs.readFile(spreadsheet.filepath, 'utf8', async (err, data) => {
+      const positions : object[] = []
+      const rows = data.split('\n')
+      for (let i = 1; i < rows.length; i++) {
+        const row = rows[i]
+        // console.log(row)
+        const rowSplit = row.split(',')
+        let [company_name, title, location, with_referral, submitted, _, interviewed, received_offer, link, note] = rowSplit
+        with_referral = with_referral === '' ? null : (with_referral === 'Y' ? true : false)
+        submitted = submitted === '' ? null : (submitted === 'Y' ? true : false)
+        interviewed = interviewed === '' ? null : (interviewed === 'Y' ? true : false)
+        received_offer = received_offer === '' ? null : (received_offer === 'Y' ? true : false)
+        positions.push({ company_name, title, location, with_referral, submitted, interviewed, received_offer, link, note, user_id: session.user.id })
+      }
+      const { error, data: insertResponse } = await supabase.from('job_applications').insert(positions)
+      // TODO: Handle errors
     })
 
     return redirect('/')

@@ -18,12 +18,12 @@ export const action : ActionFunction = async ({ request, params }: ActionArgs) =
     const formData = await request.formData()
     const toggleField = (formData.get('status') || '').toString()
 
-    const { error: fetchError, data } = await supabase.from('job_applications').select(toggleField.toString()).eq('id', appId)
+    const { error: fetchError, data } = await supabase.from('job_applications').select(toggleField.toString()).eq('id', appId).eq('user_id', session.user.id)
     const updatePayload = { updated_at: 'now()' }
     Object.keys(updatePayload).push(toggleField)
     updatePayload[toggleField] = !data[0][toggleField]
 
-    await supabase.from('job_applications').update(updatePayload).eq('id', appId)
+    await supabase.from('job_applications').update(updatePayload).eq('id', appId).eq('user_id', session.user.id)
   }
 
   return redirect('/')

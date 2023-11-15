@@ -85,7 +85,7 @@ export default function Index() {
               </div>
               <div className="w-64 flex gap-2 justify-end grow">
                 <div>
-                  {app.with_referral ? <Status status="good" appId={app.id}>{app.referrer}</Status> : <Status status="neutral" appId={app.id}>No referral</Status>}
+                  {app.with_referral ? <Status status="good" appId={app.id}>{app.referrer || 'Referred'}</Status> : <Status status="neutral" appId={app.id}>No referral</Status>}
                 </div>
                 <div>
                   {app.submitted ? <Status status="good" field="submitted" appId={app.id}>Submitted</Status> : <Status status="neutral" field="submitted" appId={app.id}>Not submitted</Status>}
