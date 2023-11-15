@@ -3,7 +3,7 @@ import { PropsWithChildren } from 'react'
 
 interface Props extends PropsWithChildren {
   status: string
-  field: string | null,
+  field?: string,
   appId: string
 }
 

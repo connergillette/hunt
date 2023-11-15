@@ -1,8 +1,8 @@
 import { PropsWithChildren } from 'react'
 
 interface Props extends PropsWithChildren {
-  type: string | 'text',
-  value: string,
+  type?: string,
+  value?: string | boolean,
   placeholder: string | '',
   name: string,
 }
