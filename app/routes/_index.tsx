@@ -57,6 +57,14 @@ export default function Index() {
     formRef.current?.reset()
   }, [jobApps])
 
+  if (!session) {
+    return (
+      <div>
+        <h1 className="text-center text-4xl font-bold">Hunt</h1>
+      </div>
+    )
+  }
+
   return (
     <div>
       <div className="flex flex-col p-10 gap-2 text-white/50">
@@ -99,8 +107,8 @@ export default function Index() {
                   }
                 </div>
                 <div>
-                  {app.interviewed != null && app.received_offer == null && (<Status status="neutral" field="received_offer" appId={app.id}>Pending offer</Status>)}
-                  {app.interviewed != null && app.interviewed && app.received_offer != null && (
+                  {app.interviewed && app.received_offer == null && (<Status status="neutral" field="received_offer" appId={app.id}>Pending offer</Status>)}
+                  {app.interviewed && app.interviewed && app.received_offer != null && (
                     app.received_offer ? <Status status="good" field="received_offer" appId={app.id}>Received offer</Status> : <Status status="bad" field="received_offer" appId={app.id}>No offer</Status>
                   )}
                 </div>

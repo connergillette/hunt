@@ -50,11 +50,14 @@ export const action: ActionFunction = async ({ request }) => {
         const row = rows[i]
         // console.log(row)
         const rowSplit = row.split(',')
-        let [company_name, title, location, with_referral, submitted, _, interviewed, received_offer, link, note] = rowSplit
-        with_referral = with_referral === '' ? null : (with_referral === 'Y' ? true : false)
-        submitted = submitted === '' ? null : (submitted === 'Y' ? true : false)
-        interviewed = interviewed === '' ? null : (interviewed === 'Y' ? true : false)
-        received_offer = received_offer === '' ? null : (received_offer === 'Y' ? true : false)
+        console.log(rowSplit)
+
+        // TODO: Clean up this logic
+        let [company_name, title, location, with_referral, submitted, offered_interview, interviewed, received_offer, link, note] = rowSplit
+        with_referral = with_referral === '' ? null : with_referral === 'Y'
+        submitted = submitted === '' ? null : submitted === 'Y'
+        interviewed = offered_interview === '' ? null : offered_interview === 'Y'
+        received_offer = received_offer === '' ? null : received_offer === 'Y'
         positions.push({ company_name, title, location, with_referral, submitted, interviewed, received_offer, link, note, user_id: session.user.id })
       }
       const { error, data: insertResponse } = await supabase.from('job_applications').insert(positions)
