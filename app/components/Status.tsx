@@ -16,7 +16,7 @@ export default function Status({ status, field, appId, children }: Props) {
   }
   return (
     <Form method="post" action={`/${appId}/update`}>
-      <button name="status" value={field} type="submit" className={`${statusColors[status]} py-1 px-2 rounded-md text-xs`} disabled={field == null}>{children}</button>
+      <button name="status" value={field} type="submit" className={`${statusColors[status]} py-1 px-2 rounded-md text-xs ${field && 'hover:opacity-80'} transition`} disabled={field == null}>{children}</button>
     </Form>
   )
 }
