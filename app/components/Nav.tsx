@@ -5,7 +5,7 @@ interface Props {
 
 export default function Nav({ signOut, session }: Props) {
   return (
-    <div className="fixed flex align-middle w-8/12 min-w-[900px] max-md:w-11/12 max-md:min-w-[300px] mx-auto h-14 z-20">
+    <div className="fixed flex align-middle w-8/12 min-w-[1200px] max-md:w-11/12 max-md:min-w-[300px] mx-auto h-14 z-20">
       <a href="/" className="py-3">
         <div className={`font-bold text-xl align-middle py-1 transition`}>Hunt</div>
       </a>

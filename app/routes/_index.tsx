@@ -61,7 +61,7 @@ export default function Index() {
     <div>
       <div className="flex flex-col p-10 gap-2 text-white/50">
         <Form action="/create" method="post" ref={formRef}>
-          <div className="flex gap-2 flex-wrap">
+          <div className="flex gap-2 flex-nowrap">
             <Input name="company_name" placeholder={'Company Name'}></Input>
             <Input name="title" placeholder={'Job Title'}></Input>
             <Input name="location" placeholder={'Location'}></Input>
@@ -85,23 +85,23 @@ export default function Index() {
               </div>
               <div className="w-64 flex gap-2 justify-end grow">
                 <div>
-                  {app.with_referral ? <Status status="good">{app.referrer}</Status> : <Status status="neutral">No referral</Status>}
+                  {app.with_referral ? <Status status="good" appId={app.id}>{app.referrer}</Status> : <Status status="neutral" appId={app.id}>No referral</Status>}
                 </div>
                 <div>
-                  {app.submitted ? <Status status="good">Submitted</Status> : <Status status="neutral">Not submitted</Status>}
+                  {app.submitted ? <Status status="good" field="submitted" appId={app.id}>Submitted</Status> : <Status status="neutral" field="submitted" appId={app.id}>Not submitted</Status>}
                 </div>
                 <div>
-                  {app.interviewed == null && <Status status="neutral">Pending response</Status>}
+                  {app.submitted && app.interviewed == null && <Status status="neutral" field="interviewed" appId={app.id}>Pending response</Status>}
                   {
-                    app.interviewed != null && (
-                      app.interviewed ? <Status status="good">Interviewed</Status> : <Status status="bad">No interview</Status>
+                    app.submitted && app.interviewed != null && (
+                      app.interviewed ? <Status status="good" field="interviewed" appId={app.id}>Interviewed</Status> : <Status status="bad" field="interviewed" appId={app.id}>No interview</Status>
                     )
                   }
                 </div>
                 <div>
-                  {app.interviewed != null && app.received_offer == null && <Status status="neutral">Pending offer</Status>}
-                  {app.interviewed != null && app.interviewed && (
-                    app.received_offer ? <Status status="good">Received offer</Status> : <Status status="bad">No offer</Status>
+                  {app.interviewed != null && app.received_offer == null && (<Status status="neutral" field="received_offer" appId={app.id}>Pending offer</Status>)}
+                  {app.interviewed != null && app.interviewed && app.received_offer != null && (
+                    app.received_offer ? <Status status="good" field="received_offer" appId={app.id}>Received offer</Status> : <Status status="bad" field="received_offer" appId={app.id}>No offer</Status>
                   )}
                 </div>
               </div>
