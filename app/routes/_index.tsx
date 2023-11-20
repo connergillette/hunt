@@ -53,6 +53,13 @@ export default function Index() {
   const actionData = useActionData()
   const formRef = useRef(null)
 
+  const [companyNameQuery, setCompanyNameQuery] = useState('')
+  const [queriedData, setQueriedData] = useState(jobApps)
+
+  useEffect(() => {
+    setQueriedData(jobApps.filter((row) => row.company_name.includes(companyNameQuery)))
+  }, [companyNameQuery])
+
   useEffect(() => {
     formRef.current?.reset()
   }, [jobApps])
@@ -70,7 +77,7 @@ export default function Index() {
       <div className="flex flex-col p-10 gap-2 text-white/50">
         <Form action="/create" method="post" ref={formRef}>
           <div className="flex gap-2 flex-nowrap">
-            <Input name="company_name" placeholder={'Company Name'}></Input>
+            <Input name="company_name" placeholder={'Company Name'} onChange={(e) => setCompanyNameQuery(e.target.value || '')}></Input>
             <Input name="title" placeholder={'Job Title'}></Input>
             <Input name="location" placeholder={'Location'}></Input>
             <Input name="referrer" placeholder={'Referrer'}></Input>
@@ -80,7 +87,7 @@ export default function Index() {
           </div>
         </Form>
         {
-          jobApps.map((app) => (
+          queriedData.map((app) => (
             <div className="flex w-full p-4 bg-gray-700 rounded-md gap-10 whitespace-nowrap text-gray-200" key={app.id}>
               <div className="w-48 font-bold flex">
                 {app.company_name}

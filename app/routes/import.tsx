@@ -50,7 +50,6 @@ export const action: ActionFunction = async ({ request }) => {
         const row = rows[i]
         // console.log(row)
         const rowSplit = row.split(',')
-        console.log(rowSplit)
 
         // TODO: Clean up this logic
         let [company_name, title, location, with_referral, submitted, offered_interview, interviewed, received_offer, link, note] = rowSplit
