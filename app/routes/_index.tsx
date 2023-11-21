@@ -8,15 +8,15 @@ import Input from '~/components/Input'
 import Status from '~/components/Status'
 
 export const action: ActionFunction = async ({ request }) => {
-  const response = new Response()
+  // const response = new Response()
 
-  const supabase = createServerClient(
-    process.env.SUPABASE_URL || '',
-    process.env.SUPABASE_KEY || '',
-    { request, response }
-  )
+  // const supabase = createServerClient(
+  //   process.env.SUPABASE_URL || '',
+  //   process.env.SUPABASE_KEY || '',
+  //   { request, response }
+  // )
 
-  const { data: { session }} = await supabase.auth.getSession()
+  // const { data: { session }} = await supabase.auth.getSession()
 
   // ...perform action
 
@@ -72,6 +72,16 @@ export default function Index() {
     )
   }
 
+  const updateStatus = (field, index) => {
+    const copy = queriedData
+    const item = copy[index]
+    item[field] = !item[field]
+
+    copy[index] = item
+
+    setQueriedData(copy)
+  }
+
   return (
     <div>
       <div className="flex flex-col p-10 gap-2 text-white/50">
@@ -86,43 +96,45 @@ export default function Index() {
             <Button type="submit">Submit</Button>
           </div>
         </Form>
-        {
-          queriedData.map((app) => (
-            <div className="flex w-full p-4 bg-gray-700 rounded-md gap-10 whitespace-nowrap text-gray-200" key={app.id}>
-              <div className="w-48 font-bold flex">
-                {app.company_name}
-              </div>
-              <div className="flex w-1/3">
-                {app.title}
-              </div>
-              <div className="flex w-24">
-                {app.location}
-              </div>
-              <div className="w-64 flex gap-2 justify-end grow">
-                <div>
-                  {app.with_referral ? <Status status="good" appId={app.id}>{app.referrer || 'Referred'}</Status> : <Status status="neutral" appId={app.id}>No referral</Status>}
+        <div className="flex flex-col gap-2">
+          {
+            queriedData.map((app, index) => (
+              <div className="flex w-full p-4 bg-gray-700 rounded-md gap-10 whitespace-nowrap text-gray-200" key={app.id}>
+                <div className="w-48 font-bold flex">
+                  {app.company_name}
                 </div>
-                <div>
-                  {app.submitted ? <Status status="good" field="submitted" appId={app.id}>Submitted</Status> : <Status status="neutral" field="submitted" appId={app.id}>Not submitted</Status>}
+                <div className="flex w-1/3">
+                  {app.title}
                 </div>
-                <div>
-                  {app.submitted && app.interviewed == null && <Status status="neutral" field="interviewed" appId={app.id}>Pending response</Status>}
-                  {
-                    app.submitted && app.interviewed != null && (
-                      app.interviewed ? <Status status="good" field="interviewed" appId={app.id}>Interviewed</Status> : <Status status="bad" field="interviewed" appId={app.id}>No interview</Status>
-                    )
-                  }
+                <div className="flex w-24">
+                  {app.location}
                 </div>
-                <div>
-                  {app.interviewed && app.received_offer == null && (<Status status="neutral" field="received_offer" appId={app.id}>Pending offer</Status>)}
-                  {app.interviewed && app.interviewed && app.received_offer != null && (
-                    app.received_offer ? <Status status="good" field="received_offer" appId={app.id}>Received offer</Status> : <Status status="bad" field="received_offer" appId={app.id}>No offer</Status>
-                  )}
+                <div className="w-64 flex gap-2 justify-end grow">
+                  <div>
+                    <Status status={app.with_referral ? "good" : "neutral"} appId={app.id}>{app.with_referral ? (app.referrer || 'Referred') : 'No referral'}</Status>
+                  </div>
+                  <div>
+                    <Status status={app.submitted ? "good" : "neutral"} field="submitted" appId={app.id} updateFunction={() => { updateStatus('submitted', index) }}>{app.submitted ? 'Submitted' : 'Not submitted'}</Status>
+                  </div>
+                  <div>
+                    {app.submitted && app.interviewed == null && <Status status="neutral" field="interviewed" updateFunction={() => { updateStatus('interviewed', index) }} appId={app.id}>Pending response</Status>}
+                    {
+                      app.submitted && app.interviewed != null && (
+                        <Status status={app.interviewed ? 'good' : 'bad'} field="interviewed" appId={app.id} updateFunction={() => { updateStatus('interviewed', index) }}>{app.interviewed ? 'Interviewed' : 'No interview'}</Status>
+                      )
+                    }
+                  </div>
+                  <div>
+                    {app.interviewed && app.received_offer == null && (<Status status="neutral" field="received_offer" appId={app.id} updateFunction={() => { updateStatus('received_offer', index) }}>Pending offer</Status>)}
+                    {app.interviewed && app.interviewed && app.received_offer != null && (
+                      <Status status={app.receieved_offer ? 'good' : 'bad'} field="received_offer" appId={app.id} updateFunction={() => { updateStatus('received_offer', index) }}>{app.received_offer ? 'Received offer' : 'No offer'}</Status>
+                    )}
+                  </div>
                 </div>
               </div>
-            </div>
-          ))
-        }
+            ))
+          }
+        </div>
       </div>
     </div>
   );
