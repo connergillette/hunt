@@ -19,7 +19,8 @@ export const action: ActionFunction = async ({ request }) => {
     const location = formData.get('location')
     const with_referral = !!formData.get('referrer')
     const referrer = formData.get('referrer')
-    const submitted = !!formData.get('submitted')
+    // const submitted = !!formData.get('submitted')
+    const submitted = true
     const link = formData.get('link')
 
     const { error } = await supabase.from('job_applications').insert({

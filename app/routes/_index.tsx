@@ -86,17 +86,37 @@ export default function Index() {
     <div>
       <div className="flex flex-col p-10 gap-2 text-white/50">
         <Form action="/create" method="post" ref={formRef}>
-          <div className="flex gap-2 flex-nowrap">
-            <Input name="company_name" placeholder={'Company Name'} onChange={(e) => setCompanyNameQuery(e.target.value || '')}></Input>
-            <Input name="title" placeholder={'Job Title'}></Input>
-            <Input name="location" placeholder={'Location'}></Input>
-            <Input name="referrer" placeholder={'Referrer'}></Input>
-            <Input name="submitted" placeholder={'Submitted?'} type="checkbox" value={true}></Input>
-            <Input name="link" placeholder={'Link'}></Input>
-            <Button type="submit">Submit</Button>
+          <div className="flex gap-3 flex-nowrap">
+            <div className="w-full flex flex-col gap-1 rounded-md bg-gray-700 py-2 px-4">
+              <Input name="company_name" placeholder={'Company Name'} onChange={(e) => setCompanyNameQuery(e.target.value || '')} required></Input>
+              <Input name="title" placeholder={'Job Title'} required></Input>
+              <Input name="location" placeholder={'Location'} required></Input>
+            </div>
+            <div className="w-full flex flex-col gap-1 p-2">
+              <Input name="referrer" placeholder={'Referrer'}></Input>
+              <Input name="note" placeholder={'Note'}></Input>
+              <div className="flex gap-3">
+                <Input name="link" placeholder={'Link'} required></Input>
+                <Button type="submit">Submit</Button>
+              </div>
+            </div>
           </div>
         </Form>
         <div className="flex flex-col gap-2">
+          <div className="flex w-full px-4 py-2 rounded-md gap-10 whitespace-nowrap text-gray-200 font-bold">
+            <div className="w-48 font-bold flex">
+              Company Name
+            </div>
+            <div className="flex w-1/3">
+              Job Title
+            </div>
+            <div className="flex w-24">
+              Location
+            </div>
+            <div className="w-64 flex gap-2 grow justify-end">
+              Status
+            </div>
+          </div>
           {
             queriedData.map((app, index) => (
               <div className="flex w-full p-4 bg-gray-700 rounded-md gap-10 whitespace-nowrap text-gray-200" key={app.id}>
@@ -124,12 +144,12 @@ export default function Index() {
                       )
                     }
                   </div>
-                  <div>
+                  <>
                     {app.interviewed && app.received_offer == null && (<Status status="neutral" field="received_offer" appId={app.id} updateFunction={() => { updateStatus('received_offer', index) }}>Pending offer</Status>)}
                     {app.interviewed && app.interviewed && app.received_offer != null && (
                       <Status status={app.receieved_offer ? 'good' : 'bad'} field="received_offer" appId={app.id} updateFunction={() => { updateStatus('received_offer', index) }}>{app.received_offer ? 'Received offer' : 'No offer'}</Status>
                     )}
-                  </div>
+                  </>
                 </div>
               </div>
             ))
