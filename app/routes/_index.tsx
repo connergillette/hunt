@@ -57,6 +57,7 @@ export default function Index() {
 
   const [companyNameQuery, setCompanyNameQuery] = useState('')
   const [queriedData, setQueriedData] = useState(jobApps)
+  const uniqueCompanies = [...new Set(jobApps.map((entry) => entry.company_name))].length
 
   useEffect(() => {
     setQueriedData(jobApps.filter((row) => row.company_name.includes(companyNameQuery)))
@@ -113,8 +114,9 @@ export default function Index() {
                 ) : (
                   <>
                     <div className="px-4 py-2 rounded-md bg-slate-600">{queriedData.filter((entry) => entry.submitted).length} submitted</div>
-                    <div className="px-4 py-2 rounded-md bg-slate-600">{queriedData.filter((entry) => entry.interviewed).length} interviews</div>
                     <div className="px-4 py-2 rounded-md bg-slate-600">{jobApps.length} total entries</div>
+                    <div className="px-4 py-2 rounded-md bg-slate-600">{queriedData.filter((entry) => entry.interviewed).length} interviews</div>
+                    <div className="px-4 py-2 rounded-md bg-slate-600">{uniqueCompanies} unique companies</div>
                   </>
                 )
               }
