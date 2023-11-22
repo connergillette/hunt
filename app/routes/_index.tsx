@@ -85,9 +85,9 @@ export default function Index() {
 
   return (
     <div>
-      <div className="flex flex-col p-10 gap-2 text-white/50">
+      <div className="flex flex-col p-10 max-lg:p-0 gap-2 text-white/50">
         <Form action="/create" method="post" ref={formRef}>
-          <div className="flex gap-3 flex-nowrap">
+          <div className="flex max-lg:flex-col gap-3 flex-nowrap">
             <div className="w-full flex flex-col gap-1 rounded-md bg-gray-700 py-2 px-4">
               <Input name="company_name" placeholder={'Company Name'} onChange={(e) => setCompanyNameQuery(e.target.value || '')} required></Input>
               <Input name="title" placeholder={'Job Title'} required></Input>
@@ -105,7 +105,7 @@ export default function Index() {
         </Form>
         <div className="flex flex-col gap-2">
           <div className="flex flex-col gap-4 px-4 py-2">
-            <div className="flex gap-4">
+            <div className="flex gap-4 whitespace-nowrap max-lg:text-xs">
               { 
                 queriedData.length !== jobApps.length ? (
                   <div className="px-4 py-2 rounded-md bg-green-600">{queriedData.length} filtered entries</div>
@@ -118,7 +118,7 @@ export default function Index() {
                 )
               }
             </div>
-            <div className="flex w-full rounded-md gap-10 whitespace-nowrap text-gray-200 font-bold">
+            <div className="flex w-full rounded-md gap-10 whitespace-nowrap text-gray-200 font-bold max-lg:hidden">
               <div className="w-48 font-bold flex">
                 Company Name
               </div>
@@ -135,20 +135,24 @@ export default function Index() {
           </div>
           {
             queriedData.map((app, index) => (
-              <div className="flex w-full p-4 bg-gray-700 rounded-md gap-10 whitespace-nowrap text-gray-200 transition-colors" key={app.id}>
-                <div className="w-48 font-bold flex">
-                  {app.company_name}
+              <div className="flex max-lg:flex-col w-full p-4 bg-gray-700 rounded-md gap-10 max-lg:gap-4 whitespace-nowrap max-md:whitespace-normal text-gray-200 transition-colors" key={app.id}>
+                <div className="flex max-lg:gap-10 w-full">
+                  <div className="w-48 max-lg:w-min font-bold flex">
+                    {app.company_name}
+                  </div>
+                  <div className="flex w-1/3 max-lg:w-full">
+                    <a href={app.id} className="underline hover:opacity-80 transition-opacity">
+                        {app.title}
+                    </a>
+                  </div>
                 </div>
-                <div className="flex w-1/3">
-                  <a href={app.id} className="underline hover:opacity-80 transition-opacity">
-                      {app.title}
-                  </a>
-                </div>
-                <div className="flex w-24">
-                  {app.location}
-                </div>
-                <div className="justify-end grow">
-                  <StatusChain app={app} updateStatus={updateStatus} index={index} />
+                <div className="flex max-lg:gap-4 w-full">
+                  <div className="flex w-24 max-lg:w-min whitespace-nowrap">
+                    {app.location}
+                  </div>
+                  <div className="justify-end grow">
+                    <StatusChain app={app} updateStatus={updateStatus} index={index} />
+                  </div>
                 </div>
               </div>
             ))

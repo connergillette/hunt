@@ -8,7 +8,7 @@ interface Props {
 
 export default function StatusChain({ app, updateStatus, index } : Props) {
   return (
-    <div className="flex gap-2 grow whitespace-nowrap justify-end">
+    <div className="flex gap-2 grow whitespace-nowrap justify-end flex-wrap">
       <div>
         <Status status={app.with_referral ? "good" : "neutral"} appId={app.id}>{app.with_referral ? (app.referrer || 'Referred') : 'No referral'}</Status>
       </div>
