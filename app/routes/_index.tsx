@@ -104,18 +104,33 @@ export default function Index() {
           </div>
         </Form>
         <div className="flex flex-col gap-2">
-          <div className="flex w-full px-4 py-2 rounded-md gap-10 whitespace-nowrap text-gray-200 font-bold">
-            <div className="w-48 font-bold flex">
-              Company Name
+          <div className="flex flex-col gap-4 px-4 py-2">
+            <div className="flex gap-4">
+              { 
+                queriedData.length !== jobApps.length ? (
+                  <div className="px-4 py-2 rounded-md bg-green-600">{queriedData.length} filtered entries</div>
+                ) : (
+                  <>
+                    <div className="px-4 py-2 rounded-md bg-slate-600">{queriedData.filter((entry) => entry.submitted).length} submitted</div>
+                    <div className="px-4 py-2 rounded-md bg-slate-600">{queriedData.filter((entry) => entry.interviewed).length} interviews</div>
+                    <div className="px-4 py-2 rounded-md bg-slate-600">{jobApps.length} total entries</div>
+                  </>
+                )
+              }
             </div>
-            <div className="flex w-1/3">
-              Job Title
-            </div>
-            <div className="flex w-24">
-              Location
-            </div>
-            <div className="w-64 flex gap-2 grow justify-end">
-              Status
+            <div className="flex w-full rounded-md gap-10 whitespace-nowrap text-gray-200 font-bold">
+              <div className="w-48 font-bold flex">
+                Company Name
+              </div>
+              <div className="flex w-1/3">
+                Job Title
+              </div>
+              <div className="flex w-24">
+                Location
+              </div>
+              <div className="w-64 flex gap-2 grow justify-end">
+                Status
+              </div>
             </div>
           </div>
           {
