@@ -119,17 +119,22 @@ export default function Index() {
               }
             </div>
             <div className="flex w-full rounded-md gap-10 whitespace-nowrap text-gray-200 font-bold max-lg:hidden">
-              <div className="w-48 font-bold flex">
-                Company Name
+              <div className="flex w-full">
+                <div className="w-48 font-bold flex">
+                  Company Name
+                </div>
+                <div className="flex w-1/3">
+                  Job Title
+                </div>
               </div>
-              <div className="flex w-1/3">
-                Job Title
-              </div>
-              <div className="flex w-24">
-                Location
-              </div>
-              <div className="w-64 flex gap-2 grow justify-end">
-                Status
+              <div className="flex w-full">
+
+                <div className="flex w-24">
+                  Location
+                </div>
+                <div className="w-64 flex gap-2 grow justify-end">
+                  Status
+                </div>
               </div>
             </div>
           </div>
