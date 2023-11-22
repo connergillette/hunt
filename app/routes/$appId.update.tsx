@@ -26,7 +26,7 @@ export const action : ActionFunction = async ({ request, params }: ActionArgs) =
     await supabase.from('job_applications').update(updatePayload).eq('id', appId).eq('user_id', session.user.id)
   }
 
-  return redirect('/')
+  return null
 }
 
 export default function UpdateApplication() {

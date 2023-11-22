@@ -6,6 +6,7 @@ import { useActionData, useLoaderData } from 'react-router'
 import Button from '~/components/Button'
 import Input from '~/components/Input'
 import Status from '~/components/Status'
+import StatusChain from '~/components/StatusChain'
 
 export const action: ActionFunction = async ({ request }) => {
   // const response = new Response()
@@ -58,7 +59,7 @@ export default function Index() {
 
   useEffect(() => {
     setQueriedData(jobApps.filter((row) => row.company_name.includes(companyNameQuery)))
-  }, [companyNameQuery])
+  }, [companyNameQuery, jobApps])
 
   useEffect(() => {
     formRef.current?.reset()
@@ -119,37 +120,20 @@ export default function Index() {
           </div>
           {
             queriedData.map((app, index) => (
-              <div className="flex w-full p-4 bg-gray-700 rounded-md gap-10 whitespace-nowrap text-gray-200" key={app.id}>
+              <div className="flex w-full p-4 bg-gray-700 rounded-md gap-10 whitespace-nowrap text-gray-200 transition-colors" key={app.id}>
                 <div className="w-48 font-bold flex">
                   {app.company_name}
                 </div>
                 <div className="flex w-1/3">
-                  {app.title}
+                  <a href={app.id} className="underline hover:opacity-80 transition-opacity">
+                      {app.title}
+                  </a>
                 </div>
                 <div className="flex w-24">
                   {app.location}
                 </div>
-                <div className="w-64 flex gap-2 justify-end grow">
-                  <div>
-                    <Status status={app.with_referral ? "good" : "neutral"} appId={app.id}>{app.with_referral ? (app.referrer || 'Referred') : 'No referral'}</Status>
-                  </div>
-                  <div>
-                    <Status status={app.submitted ? "good" : "neutral"} field="submitted" appId={app.id} updateFunction={() => { updateStatus('submitted', index) }}>{app.submitted ? 'Submitted' : 'Not submitted'}</Status>
-                  </div>
-                  <div>
-                    {app.submitted && app.interviewed == null && <Status status="neutral" field="interviewed" updateFunction={() => { updateStatus('interviewed', index) }} appId={app.id}>Pending response</Status>}
-                    {
-                      app.submitted && app.interviewed != null && (
-                        <Status status={app.interviewed ? 'good' : 'bad'} field="interviewed" appId={app.id} updateFunction={() => { updateStatus('interviewed', index) }}>{app.interviewed ? 'Interviewed' : 'No interview'}</Status>
-                      )
-                    }
-                  </div>
-                  <>
-                    {app.interviewed && app.received_offer == null && (<Status status="neutral" field="received_offer" appId={app.id} updateFunction={() => { updateStatus('received_offer', index) }}>Pending offer</Status>)}
-                    {app.interviewed && app.interviewed && app.received_offer != null && (
-                      <Status status={app.receieved_offer ? 'good' : 'bad'} field="received_offer" appId={app.id} updateFunction={() => { updateStatus('received_offer', index) }}>{app.received_offer ? 'Received offer' : 'No offer'}</Status>
-                    )}
-                  </>
+                <div className="justify-end grow">
+                  <StatusChain app={app} updateStatus={updateStatus} index={index} />
                 </div>
               </div>
             ))

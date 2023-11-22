@@ -24,6 +24,7 @@ export const meta: V2_MetaFunction = () => {
 };
 
 export const links: LinksFunction = () => [
+  { rel: "stylesheet", href: 'https://use.typekit.net/vte1slr.css' },
   { rel: 'stylesheet', href: styles },
 ];
 

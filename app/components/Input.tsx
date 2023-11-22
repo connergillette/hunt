@@ -6,7 +6,7 @@ interface Props extends PropsWithChildren {
   placeholder: string | '',
   name: string,
   required?: boolean,
-  onChange: ChangeEventHandler,
+  onChange?: ChangeEventHandler,
 }
 
 export default function Input({ type = 'text', value, name, placeholder, onChange, required }: Props) {
