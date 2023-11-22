@@ -65,6 +65,7 @@ export default function Index() {
 
   useEffect(() => {
     formRef.current?.reset()
+    setQueriedData(jobApps)
   }, [jobApps])
 
   if (!session) {
@@ -90,7 +91,7 @@ export default function Index() {
       <div className="flex flex-col p-10 max-lg:p-0 gap-2 text-white/50">
         <Form action="/create" method="post" ref={formRef}>
           <div className="flex max-lg:flex-col gap-3 flex-nowrap">
-            <div className="w-full flex flex-col gap-1 rounded-md bg-gray-700 py-2 px-4">
+            <div className="w-full flex flex-col gap-1 rounded-md bg-gray-700 py-2 px-4 pb-6">
               <Input name="company_name" placeholder={'Company Name'} onChange={(e) => setCompanyNameQuery(e.target.value || '')} required></Input>
               <Input name="title" placeholder={'Job Title'} required></Input>
               <Input name="location" placeholder={'Location'} required></Input>
@@ -107,7 +108,7 @@ export default function Index() {
         </Form>
         <div className="flex flex-col gap-2">
           <div className="flex flex-col gap-4 px-4 py-2">
-            <div className="flex gap-4 whitespace-nowrap max-lg:text-xs">
+            <div className="flex gap-4 whitespace-nowrap max-lg:text-xs overflow-x-scroll">
               { 
                 queriedData.length !== jobApps.length ? (
                   <div className="px-4 py-2 rounded-md bg-green-600">{queriedData.length} filtered entries</div>
