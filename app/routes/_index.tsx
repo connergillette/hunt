@@ -7,6 +7,7 @@ import Button from '~/components/Button'
 import Input from '~/components/Input'
 import Status from '~/components/Status'
 import StatusChain from '~/components/StatusChain'
+import ExternalIcon from '~/assets/external.svg'
 
 export const action: ActionFunction = async ({ request }) => {
   // const response = new Response()
@@ -128,7 +129,6 @@ export default function Index() {
                 </div>
               </div>
               <div className="flex w-full">
-
                 <div className="flex w-24">
                   Location
                 </div>
@@ -145,9 +145,12 @@ export default function Index() {
                   <div className="w-48 max-lg:w-min font-bold flex">
                     {app.company_name}
                   </div>
-                  <div className="flex w-1/3 max-lg:w-full">
+                  <div className="flex max-lg:w-full h-full">
                     <a href={app.id} className="underline hover:opacity-80 transition-opacity">
-                        {app.title}
+                      {app.title}
+                    </a>
+                    <a href={app.link} target="_blank" rel="noreferrer" className="flex items-center px-2 underline pb-0 h-full w-full hover:opacity-100 opacity-40 transition-opacity">
+                      <img src={ExternalIcon} />
                     </a>
                   </div>
                 </div>

@@ -27,7 +27,6 @@ export const links: LinksFunction = () => [
   { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
   { rel: 'preconnect', href: 'https://fonts.gstatic.com' },
   { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Cabin:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400;1,500;1,700&display=swap'},
-  // { rel: "stylesheet", href: 'https://use.typekit.net/vte1slr.css' },
   { rel: 'stylesheet', href: styles },
 ];
 
