@@ -23,7 +23,7 @@ export const action: ActionFunction = async ({ request }) => {
 
   // ...perform action
 
-  return redirect('/')
+  // return redirect('/')
 }
 
 export const loader: LoaderFunction = async ({ request }: LoaderArgs) => {
