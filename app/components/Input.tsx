@@ -3,7 +3,7 @@ import { ChangeEventHandler, PropsWithChildren } from 'react'
 interface Props extends PropsWithChildren {
   type?: string,
   value?: string | boolean,
-  placeholder: string | '',
+  placeholder?: string | '',
   name: string,
   required?: boolean,
   onChange?: ChangeEventHandler,

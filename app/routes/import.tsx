@@ -17,17 +17,6 @@ export const action: ActionFunction = async ({ request }) => {
   const { data: { session }} = await supabase.auth.getSession()
 
   if (session) {
-    // const uploadHandler = unstable_composeUploadHandlers(
-    //   unstable_createFileUploadHandler({
-    //     maxPartSize: 5_000_000,
-    //     file: ({ filename }) => filename,
-    //   }),
-    // );
-    // const formData = await unstable_parseMultipartFormData(
-    //   request,
-    //   uploadHandler
-    // );
-    // const spreadsheet = formData.get('spreadsheet')
     const uploadHandler = unstable_composeUploadHandlers(
       unstable_createFileUploadHandler({
         maxPartSize: 5_000_000,
@@ -70,7 +59,8 @@ export const action: ActionFunction = async ({ request }) => {
 }
 export default function Import () {
   return (
-    <Form method="post" encType="multipart/form-data">
+    <Form method="post" encType="multipart/form-data" className="flex flex-col gap-4 max-w-[400px] mx-auto">
+      <h1 className="text-4xl">Import CSV file</h1>
       <Input type="file" name="spreadsheet" />
       <Button>Submit</Button>
     </Form>
