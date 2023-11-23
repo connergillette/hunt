@@ -61,7 +61,7 @@ export default function Index() {
   
   useEffect(() => {
     if (jobApps) {
-      setQueriedData(jobApps.filter((row) => row.company_name.includes(companyNameQuery)))
+      setQueriedData(jobApps.filter((row) => row.company_name.toLowerCase().includes(companyNameQuery.toLowerCase())))
     }
   }, [companyNameQuery, jobApps])
   
