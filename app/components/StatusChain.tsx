@@ -26,7 +26,7 @@ export default function StatusChain({ app, updateStatus, index } : Props) {
       <>
         {app.interviewed && app.received_offer == null && (<Status status="neutral" field="received_offer" appId={app.id} updateFunction={() => { updateStatus && updateStatus('received_offer', index) }}>Pending offer</Status>)}
         {app.interviewed && app.interviewed && app.received_offer != null && (
-          <Status status={app.receieved_offer ? 'good' : 'bad'} field="received_offer" appId={app.id} updateFunction={() => { updateStatus && updateStatus('received_offer', index) }}>{app.received_offer ? 'Received offer' : 'No offer'}</Status>
+          <Status status={app.received_offer ? 'good' : 'bad'} field="received_offer" appId={app.id} updateFunction={() => { updateStatus && updateStatus('received_offer', index) }}>{app.received_offer ? 'Received offer' : 'No offer'}</Status>
         )}
       </>
     </div>
