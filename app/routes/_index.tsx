@@ -8,6 +8,7 @@ import Input from '~/components/Input'
 import Status from '~/components/Status'
 import StatusChain from '~/components/StatusChain'
 import ExternalIcon from '~/assets/external.svg'
+import HomePage from '~/components/HomePage'
 
 export const action: ActionFunction = async ({ request }) => {
   // const response = new Response()
@@ -57,25 +58,27 @@ export default function Index() {
 
   const [companyNameQuery, setCompanyNameQuery] = useState('')
   const [queriedData, setQueriedData] = useState(jobApps)
-  const uniqueCompanies = [...new Set(jobApps.map((entry) => entry.company_name))].length
-
+  
   useEffect(() => {
-    setQueriedData(jobApps.filter((row) => row.company_name.includes(companyNameQuery)))
+    if (jobApps) {
+      setQueriedData(jobApps.filter((row) => row.company_name.includes(companyNameQuery)))
+    }
   }, [companyNameQuery, jobApps])
-
+  
   useEffect(() => {
     formRef.current?.reset()
     setQueriedData(jobApps)
   }, [jobApps])
-
+  
   if (!session) {
     return (
-      <div>
-        <h1 className="text-center text-4xl font-bold">Hunt</h1>
+      <div className="h-full">
+        <HomePage />
       </div>
     )
   }
 
+  const uniqueCompanies = [...new Set(jobApps.map((entry) => entry.company_name))].length
   const updateStatus = (field, index) => {
     const copy = queriedData
     const item = copy[index]
@@ -108,7 +111,7 @@ export default function Index() {
         </Form>
         <div className="flex flex-col gap-2">
           <div className="flex flex-col gap-4 px-4 py-2">
-            <div className="flex gap-4 whitespace-nowrap max-lg:text-xs overflow-x-scroll">
+            <div className="flex gap-4 whitespace-nowrap max-lg:text-xs overflow-x-scroll no-scrollbar">
               { 
                 queriedData.length !== jobApps.length ? (
                   <div className="px-4 py-2 rounded-md bg-green-600">{queriedData.length} filtered entries</div>

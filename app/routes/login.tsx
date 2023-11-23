@@ -38,11 +38,11 @@ export default function Login() {
           <h1 className="text-4xl">Log in</h1>
           <div className="flex flex-col gap-2">
             <span>Email</span>
-            <input name="email" className="h-10 px-4 py-2 bg-gray-100 rounded-md" required></input>
+            <input name="email" className="h-10 px-4 py-2 bg-gray-100 rounded-md text-slate-800" required></input>
           </div>
           <div className="flex flex-col gap-2">
             <span>Password</span>
-            <input name="password" type="password" className="h-10 px-4 py-2 bg-gray-100 rounded-md" required></input>
+            <input name="password" type="password" className="h-10 px-4 py-2 bg-gray-100 rounded-md text-slate-800" required></input>
           </div>
           <div className="max-w-4xl">
             <button type="submit" className={`px-4 py-2 rounded-md bg-gray-600 text-white ${isLoading ? 'opacity-40' : ''}`} disabled={isLoading}>Log in</button>
