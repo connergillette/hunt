@@ -1,4 +1,4 @@
-import { ActionArgs, ActionFunction, redirect } from '@remix-run/node'
+import { ActionArgs, ActionFunction, json, redirect } from '@remix-run/node'
 import { createServerClient } from '@supabase/auth-helpers-remix'
 
 export const action : ActionFunction = async ({ request, params }: ActionArgs) => {
