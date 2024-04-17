@@ -85,7 +85,7 @@ export default function App() {
         <div className="w-full fixed bg-gray-800/90 border-b-[1px] border-gray-700 border-solid h-14 flex justify-center">
           <Nav session={session} signOut={() => supabase.auth.signOut()} />
         </div>
-        <div className="w-8/12 min-w-[1200px] max-md:w-11/12 max-md:min-w-[300px] mx-auto max-md:mt-2 max-md:pb-0 max-md:h-full flex flex-col pt-16 h-screen">
+        <div className="flex flex-col p-10 max-md:px-2 w-full gap-2 text-white/50 max-w-[1200px] pt-16 mx-auto">
           <Outlet context={{ supabase, session }} />
         </div>
         <ScrollRestoration />

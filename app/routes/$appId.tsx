@@ -46,18 +46,18 @@ export default function AppDetail({}: Props) {
   }
   
   return (
-    <div className="m-10 mt-[10%] mx-auto">
-      <div className="w-min whitespace-nowrap">
-        <a href={app.link} target="_blank" className="underline hover:opacity-80 transition-opacity" rel="noreferrer"><h1 className="text-6xl max-md:text-2xl">{app.title}</h1></a>
+    <div className="m-10 mt-[10%] mx-auto w-2/3">
+      <div className="text-center">
+        <a href={app.link} target="_blank" className="underline hover:opacity-80 transition-opacity text-white" rel="noreferrer"><h1 className="text-6xl max-md:text-2xl">{app.title}</h1></a>
       </div>
-      <div className="flex text-4xl max-md:text-lg leading-relaxed gap-10">
+      <div className="flex text-4xl max-md:text-lg leading-relaxed gap-10 justify-center">
         <span>{app.company_name}</span>
         <span className="text-gray-400">{app.location}</span>
       </div>
-      <div className="flex flex-col py-4 w-min">
+      <div className="flex flex-col py-4 justify-center">
         <StatusChain app={app} updateStatus={updateStatus} />
       </div>
-      <div className="flex flex-col p-10">
+      <div className="flex flex-col w-min whitespace-nowrap mx-auto">
         <div className="flex">
           <div className="w-48 font-bold">Last updated</div>
           <div>{new Date(app.updated_at).toLocaleString()}</div>

@@ -80,6 +80,7 @@ export default function Index() {
 
   const uniqueCompanies = [...new Set(jobApps.map((entry) => entry.company_name))].length
   const updateStatus = (field, index) => {
+    console.log(field, index)
     const copy = queriedData
     const item = copy[index]
     item[field] = !item[field]
@@ -90,8 +91,7 @@ export default function Index() {
   }
 
   return (
-    <div>
-      <div className="flex flex-col p-10 max-lg:p-0 gap-2 text-white/50">
+      <div>
         <Form action="/create" method="post" ref={formRef}>
           <div className="flex max-lg:flex-col gap-3 flex-nowrap">
             <div className="w-full flex flex-col gap-1 rounded-md bg-gray-700 py-2 px-4 pb-6">
@@ -164,7 +164,7 @@ export default function Index() {
                   <div className="flex w-24 max-lg:w-min whitespace-nowrap">
                     {app.location}
                   </div>
-                  <div className="justify-end grow">
+                  <div className="grow">
                     <StatusChain app={app} updateStatus={updateStatus} index={index} />
                   </div>
                 </div>
@@ -173,6 +173,5 @@ export default function Index() {
           }
         </div>
       </div>
-    </div>
   );
 }
